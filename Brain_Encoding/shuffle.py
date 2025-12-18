@@ -282,8 +282,10 @@ def shuffle_main_per_subj(name_base, main_features, pca_components, subj, layer_
 def parse_args():
     import argparse
     parser = argparse.ArgumentParser(description="Run shuffle analysis")
-    parser.add_argument("--name_base", type=str, required=True, help="Base name for the dataset")
-    parser.add_argument("--layer_key", type=str, required=True, help="Layer key for the data")
+    parser.add_argument("--name_base", type=str, required=True,
+                        help="Residual identifier formatted as windowSize_sourceLayer_targetLayer (e.g., 50_20_30)")
+    parser.add_argument("--layer_key", type=str, required=True,
+                        help="Which stream to load: layer_<idx> for raw activations or residual for the disentangled stream")
     parser.add_argument("--pca_components", type=int, default=500, help="Number of PCA components")
     parser.add_argument("--subj", type=str, required=True,  help="Subject ID for analysis")
     return parser.parse_args()

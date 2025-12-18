@@ -199,8 +199,10 @@ def encoding_main(name_base, main_features, pca_components, layer_key):
 def parse_args():
     import argparse
     parser = argparse.ArgumentParser(description="Run shuffle analysis")
-    parser.add_argument("--name_base", type=str, required=True, help="Base name for the dataset")
-    parser.add_argument("--layer_key", type=str, required=True, help="Layer key for the data")
+    parser.add_argument("--name_base", type=str, required=True,
+                        help="Residual identifier formatted as windowSize_sourceLayer_targetLayer (e.g., 50_20_30)")
+    parser.add_argument("--layer_key", type=str, required=True,
+                        help="Which stream to load: layer_<idx> for raw activations or residual for the disentangled stream")
     parser.add_argument("--pca_components", type=int, default=500, help="Number of PCA components")
     return parser.parse_args()
 

@@ -12,9 +12,7 @@ Code accompanying the NeurIPS 2025 paper **“[Far from the Shallow: Brain-Predi
 	- [Residual Reasoning Embedding](#1-residual-reasoning-embedding)
 	- [Neurolinguistic Probing](#2-neurolinguistic-probing)
 	- [Brain Encoding & Shuffle Baselines](#3-brain-encoding--shuffle-baselines)
-6. [Results & Plotting](#results--plotting)
-7. [Troubleshooting & Tips](#troubleshooting--tips)
-8. [Citation](#citation)
+6. [Citation](#citation)
 
 ## Project Overview
 

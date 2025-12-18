@@ -1,6 +1,6 @@
 # Far from the Shallow: Brain-Predictive Reasoning Embedding
 
-Code accompanying the NeurIPS 2025 paper **“Far from the Shallow: Brain-Predictive Reasoning Embedding through Residual Disentanglement.”** The repository contains everything needed to (1) construct reasoning-focused residual embeddings from large language models, (2) probe them on neurolinguistic and commonsense benchmarks, and (3) evaluate how well they predict intracranial brain recordings during naturalistic language comprehension.
+Code accompanying the NeurIPS 2025 paper **“[Far from the Shallow: Brain-Predictive Reasoning Embedding through Residual Disentanglement.](https://arxiv.org/pdf/2510.22860)”** The repository contains everything needed to (1) construct reasoning-focused residual embeddings from large language models, (2) probe them on neurolinguistic and commonsense benchmarks, and (3) evaluate how well they predict intracranial brain recordings during naturalistic language comprehension.
 
 ## Table of Contents
 

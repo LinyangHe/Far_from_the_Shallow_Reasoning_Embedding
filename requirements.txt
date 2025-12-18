@@ -1,0 +1,24 @@
+# Core scientific stack
+numpy>=1.24
+pandas>=2.1
+scipy>=1.11
+scikit-learn>=1.4
+matplotlib>=3.8
+tqdm>=4.66
+joblib>=1.3
+h5py>=3.9
+
+# Deep learning / HF ecosystem
+transformers>=4.39
+accelerate>=0.25
+huggingface-hub>=0.20
+sentencepiece>=0.1.99
+
+# Audio + neuroimaging
+mne>=1.6
+nilearn>=0.10
+librosa>=0.10
+torchaudio>=2.2
+
+# Optional GPU acceleration (comment out if CUDA wheels unavailable)
+# cupy-cuda12x>=12.1

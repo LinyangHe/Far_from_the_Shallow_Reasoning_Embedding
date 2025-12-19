@@ -79,10 +79,12 @@ Tested with Python 3.10, PyTorch ≥ 2.2, CUDA 12, and Ubuntu 22.04/Windows Subs
 | --- | --- | --- |
 | **Podcast transcript** | `Brain_Encoding/podcast_transcript.csv` | Word-level timestamps aligned to naturalistic audio. |
 | **Word-rate features** | `Brain_Encoding/podcast_feats/` | Baseline regressors from 1.5 s & 3 s windows. |
-| **ECoG data** | `Brain_Encoding/podcast_data/sub-XX/ieeg/*.fif` | Not distributed. Place subject folders under `Brain_Encoding/podcast_data/`. |
+| **ECoG data** | `Brain_Encoding/podcast_data/sub-XX/ieeg/*.fif` | Download Hasson podcast iEEG from OpenNeuro dataset [ds005574](https://openneuro.org/datasets/ds005574); unzip so each `sub-XX` folder lives under `Brain_Encoding/podcast_data/`. |
 | **Residual training corpora** | user-provided text | Paths configured when instantiating `ResidualReasoningConstructor`. |
 | **Benchmark datasets** | `LLM_Probing/data/` | Includes BLiMP (jsonl), COMPS, Logic-LLM, ProntoQA, WinoGrande. Ensure licensing/usage terms are satisfied. |
 | **Precomputed embeddings** | `~/Data/Hasson_good_layer/*.pkl` | Produced by running the residual constructor or other upstream scripts. |
+
+> Tip: the OpenNeuro CLI can pull a single subject via `openneuro download --dataset ds005574 --include sub-03`. After download, mirror the folder structure shown above so the scripts can find `./podcast_data/sub-XX/ieeg/sub-XX_task-podcast_desc-highgamma_ieeg.fif`.
 
 Update file paths or symlinks if your data live elsewhere. All scripts accept absolute paths, so feel free to edit the defaults before launching large jobs.
 

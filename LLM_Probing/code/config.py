@@ -1,5 +1,6 @@
 import torch
 
+
 class ExperimentConfig:
     """
     This class is used to store the configuration of an experiment.
@@ -7,72 +8,52 @@ class ExperimentConfig:
     def __init__(
         self,
         output_file_name=None,
-        file_id=None,
-        field=None,
-        ling_form=None,
         type_name=None,
         device=None,
         batch_size=32,
         sent_pooling='last',
         output_hidden_states=True,
-        output_attentions=False,
-        transfer_matrix=None,
         target_layer=None,
-        speaker=None, # None for language model
-        task_label_path=None,
-        speech_data_path=None,
-        speech_mode=False,
         pca_dim=-1,
-        test_mode=False,
         model_name=None,
         task=None,
-        gpu_classify=False,
-        lang=None,
-        embed_path=None, # save to .pkl file
         residual_mode=None,
-        save_linear_weights=None,
-        use_residual_cache=None,
         bow_mode=False,
-        save_to_mat=False,
+        use_memmap=False,
+        memmap_dir=None,
         filter_mode=False,
-        mat_path=None, # save to .mat file
-        thinking_mode_off=False, # for thinking mode, use the same config as test mode
+        blimp_bow_results_path="./results/blimp/blimp_base_bow_-1_bow.csv",
+        residuals_blimp_prefix=None,
+        residuals_comps_prefix=None,
+        residuals_source_target_layers=((0, 6), (6, 20), (20, 30)),
         shuffle=True,
-        blimp_residual_filter=False
     ):
         self.output_file_name = output_file_name
-        self.file_id = file_id
-        self.field = field
-        self.ling_form = ling_form
         self.type_name = type_name
         self.device = device if device else torch.device("cpu")
         self.batch_size = batch_size
         self.sent_pooling = sent_pooling
         self.output_hidden_states = output_hidden_states
-        self.transfer_matrix = transfer_matrix
         self.target_layer = target_layer
-        self.output_attentions = output_attentions
-        self.speaker = speaker
-        self.task_label_path = task_label_path
-        self.speech_data_path = speech_data_path
-        self.speech_mode = speech_mode
         self.pca_dim = pca_dim
-        self.test_mode = test_mode
         self.model_name = model_name
         self.task = task
-        self.gpu_classify = gpu_classify
-        self.lang = lang
-        self.embed_path = embed_path
         self.residual_mode = residual_mode
-        self.save_linear_weights = save_linear_weights
-        self.use_residual_cache = use_residual_cache
         self.bow_mode = bow_mode
-        self.save_to_mat = save_to_mat
+        self.use_memmap = use_memmap
+        self.memmap_dir = memmap_dir
         self.filter_mode = filter_mode
-        self.mat_path = mat_path
-        self.thinking_mode_off = thinking_mode_off
+        self.blimp_bow_results_path = blimp_bow_results_path
+        if residuals_blimp_prefix is None and model_name:
+            model_tag = model_name.split("/")[-1]
+            residuals_blimp_prefix = f"/Data/BLiMP_{model_tag}/BLiMP_{model_tag}_-1"
+        if residuals_comps_prefix is None and model_name:
+            model_tag = model_name.split("/")[-1]
+            residuals_comps_prefix = f"/Data/COMPS_{model_tag}/comps_base_{model_tag}_-1"
+        self.residuals_blimp_prefix = residuals_blimp_prefix
+        self.residuals_comps_prefix = residuals_comps_prefix
+        self.residuals_source_target_layers = residuals_source_target_layers
         self.shuffle = shuffle
-        self.blimp_residual_filter = blimp_residual_filter
 
     def update(self, update_dict: dict):
         """

@@ -71,7 +71,7 @@ Tested with Python 3.10, PyTorch ≥ 2.2, CUDA 12, and Ubuntu 22.04/Windows Subs
 	huggingface-cli login
 	```
 
-4. **Set cache/data paths** referenced in the scripts (e.g., `~/Data/Hasson_good_layer` for embeddings and `./podcast_data` for ECoG files).
+4. **Set cache/data paths** referenced in the scripts (e.g., `Brain_Encoding/embeddings` for embeddings and `Brain_Encoding/podcast_data` for ECoG files). All brain-encoding scripts accept `--embedding_dir`, `--ecog_dir`, and `--output_dir` flags so you can point them at any location.
 
 ## Data Preparation
 
@@ -82,7 +82,7 @@ Tested with Python 3.10, PyTorch ≥ 2.2, CUDA 12, and Ubuntu 22.04/Windows Subs
 | **ECoG data** | `Brain_Encoding/podcast_data/sub-XX/ieeg/*.fif` | Download Hasson podcast iEEG from OpenNeuro dataset [ds005574](https://openneuro.org/datasets/ds005574); unzip so each `sub-XX` folder lives under `Brain_Encoding/podcast_data/`. |
 | **Residual training corpora** | user-provided text | Paths configured when instantiating `ResidualReasoningConstructor`. |
 | **Benchmark datasets** | `LLM_Probing/data/` | Includes BLiMP (jsonl), COMPS, Logic-LLM, ProntoQA, WinoGrande. Ensure licensing/usage terms are satisfied. |
-| **Precomputed embeddings** | `~/Data/Hasson_good_layer/*.pkl` | Produced by running the residual constructor or other upstream scripts. |
+| **Precomputed embeddings** | `Brain_Encoding/embeddings/*.pkl` | Produced by running the residual constructor or other upstream scripts. Place them in the embeddings directory (or pass `--embedding_dir`). |
 
 > Tip: the OpenNeuro CLI can pull a single subject via `openneuro download --dataset ds005574 --include sub-03`. After download, mirror the folder structure shown above so the scripts can find `./podcast_data/sub-XX/ieeg/sub-XX_task-podcast_desc-highgamma_ieeg.fif`.
 
@@ -157,7 +157,10 @@ cd Brain_Encoding
 python encoding.py `
 	--name_base 50_20_30 `
 	--layer_key residual `
-	--pca_components 500
+	--pca_components 500 `
+	--embedding_dir ./embeddings `
+	--ecog_dir ./podcast_data `
+	--output_dir ./encoding_results
 ```
 
 `shuffle.py` estimates null distributions by permuting embeddings while keeping word-rate features intact:
@@ -167,14 +170,17 @@ python shuffle.py `
 	--name_base 50_20_30 `
 	--layer_key residual `
 	--pca_components 500 `
-	--subj 03
+	--subj 03 `
+	--embedding_dir ./embeddings `
+	--ecog_dir ./podcast_data `
+	--output_dir ./shuffle_results
 ```
 
 > Choose `name_base`/`layer_key` pairs from the table in the next section (e.g., `('50_0_6', 'layer_0')` for lexicon, `('50_6_20', 'residual')` for meaning). Keep `pca_components` aligned with the features you exported.
 
 > Naming cheat sheet: `name_base` follows the pattern `windowSize_sourceLayer_targetLayer`, so `50_20_30` means a 50-token context window with residuals trained from layer 20 to layer 30. `layer_key` tells the script which stream to load from disk: use `layer_0`/`layer_30` when you want raw activations from those layers, or `residual` when you want the disentangled representation produced by the ridge mapping between the two layers encoded in `name_base`.
 
-Outputs (per subject) include variance-partitioned correlations, residual embedding performance, and per-channel significance thresholds saved under `~/Data/encoding_results_*`.
+Outputs (per subject) include variance-partitioned correlations, residual embedding performance, and per-channel significance thresholds saved under the directory specified by `--output_dir` (defaults to `Brain_Encoding/encoding_results` and `Brain_Encoding/shuffle_results`).
 
 #### Batching experiments with `run_encoding.ipynb`
 
